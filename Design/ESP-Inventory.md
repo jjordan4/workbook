@@ -18,8 +18,13 @@
 
 **OrderHistory** <span class="md"><b class="pk"><i class='fk'>ItemNumber</i>,PoNumber</b>Date, SupplierNumber,Quantity,Cost</span>
 ### 2NF
+**OrderHistory** <span class="md"><b class="pk"><i class='fk'>ItemNumber</i>,<i class='fk'>PONumber</i></b>Date, SupplierNumber,Quantity,Cost</span>
+
+**PurchaseOrder** <span class="md"><b class="pk">PoNumber</b>Date, SupplierNumber</span>
 
 ### 3NF
+
+>No changes
 
 ### Final Tables
 
