@@ -40,8 +40,13 @@
 
 ### 0NF
 
+**PurchaseOrder** <span class="md"><b class="pk">PurchaseOrderNumber</b>, SupplierName, SupplierNumber, Address, City, Province, PostalCode, Phone, Date,<b class="rg">Itemnumber, SupplierItemNumber, SupplierDescription, Quantity, Cost, Amount</b>, SubTotal, GST, Total</span>
+
 ### 1NF
 
+**PurchaseOrder** <Span class="md"><b class="pk">PurchaseOrderNumber</b>, SupplierName, SupplierNumber, Address, City, Province, Postal Code, Phone, Date, SubTotal,GST, Total </span>
+
+**PurchaseOrderItem** <Span class="md"><b class="pk"><i class="fk">PurchaseOrderNumber</i>ItemNumber</b>, </span>
 ### 2NF
 
 ### 3NF
