@@ -58,6 +58,14 @@
 **Supplier** <span class="md"><b class="pk">SupplierNumber</b>, SupplierName, Address, City, Province, PostalCode, Phone</span>
 
 **PurchaseOrderItem** <span class="md"><b class="pk"><i class="fk">PurchaseOrderNumber</i>ItemNumber</b>, SupplierItemNumber, SupplierDescription, Quantity, Cost, Amount</span>
+----
+# Cheque Register
+
+...Normalization here...
+
+## ERD
+
+![](chequeregister.png)
 
 
 
