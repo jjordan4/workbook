@@ -46,10 +46,19 @@
 
 **PurchaseOrder** <Span class="md"><b class="pk">PurchaseOrderNumber</b>, SupplierName, SupplierNumber, Address, City, Province, Postal Code, Phone, Date, SubTotal,GST, Total </span>
 
-**PurchaseOrderItem** <Span class="md"><b class="pk"><i class="fk">PurchaseOrderNumber</i>ItemNumber</b>, </span>
+**PurchaseOrderItem** <Span class="md"><b class="pk"><i class="fk">PurchaseOrderNumber</i>ItemNumber</b>,SupplierItemNumber, SupplierDescription, Quantity, Cost, Amount </span>
 ### 2NF
 
+> No Changes Made
+
 ### 3NF
+
+**PurchaseOrder** <span class="md"><b class="pk">PurchaseOrderNumber</b>, <i class="fk">SupplierNumber</i>, Date, Subtotal, GST, Total</span>
+
+**Supplier** <span class="md"><b class="pk">SupplierNumber</b>, SupplierName, Address, City, Province, PostalCode, Phone</span>
+
+**PurchaseOrderItem** <span class="md"><b class="pk"><i class="fk">PurchaseOrderNumber</i>ItemNumber</b>, SupplierItemNumber, SupplierDescription, Quantity, Cost, Amount</span>
+
 
 
 ----
