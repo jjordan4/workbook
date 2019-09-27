@@ -45,3 +45,10 @@ CHECK (Mark BETWEEN 0 AND 100)
 ## ESP - Spec 1
 
 ![Spec 1 ERD](ESP-PhysicalERD-Spec-1.png)
+
+----
+## SQL Download 
+
+> Follow the link below and sign in with your Nait ID. Look for SQL Server 2017 developer 64bit download [Instructions](https://dmit-1508.github.io/about/slides-installing-sql-server.html#/) on how to install.
+
+[Weblink](https://portal.azure.com/?Microsoft_Azure_Education_correlationId=31368EAF3BFF60520441834B3A4C61B0&Microsoft_Azure_Education_newA4E=true#blade/Microsoft_Azure_Education/EducationMenuBlade/software)
