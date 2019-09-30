@@ -56,4 +56,4 @@ CHECK (Mark BETWEEN 0 AND 100)
 Under the options tab in SQL Server managerment, go to text editor, then activate word wrap and show visual glyphs. Under the tab section within all languages; activate insert spaces.
 
 ## DROP TABLES
- 
+ Drop your tables in the reverse order you create your tables for your database.
