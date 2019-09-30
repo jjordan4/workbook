@@ -33,11 +33,10 @@ IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Orders')
     DROP TABLE Orders
 IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Customers')
     DROP TABLE Customers
-
-    IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Payments')
-    DROP TABLE Payments
 IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'PaymentLogDetails')
     DROP TABLE PaymentLogDetails
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Payments')
+    DROP TABLE Payments
 
 -- To create a database table, we use the CREATE TABLE statement.
 -- Note that the order in which we create/drop tables is important
