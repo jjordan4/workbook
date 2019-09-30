@@ -25,7 +25,6 @@ GO  -- this statement helps to "separate" various DDL statements in our script
 -- because of how the tables are related via Foreign Keys.
 /* DROP TABLE statements (to "clean up" the database for re-creation)  */
 /*   You should drop tables in the REVERSE order in which you created them */
-
 IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'OrderDetails')
     DROP TABLE OrderDetails
 IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'InventoryItems')
@@ -35,10 +34,19 @@ IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Orders')
 IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Customers')
     DROP TABLE Customers
 
+    IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'Payments')
+    DROP TABLE Payments
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'PaymentLogDetails')
+    DROP TABLE PaymentLogDetails
+
 -- To create a database table, we use the CREATE TABLE statement.
 -- Note that the order in which we create/drop tables is important
 -- because of how the tables are related via Foreign Keys.
-CREATE TABLE Customers
+-- Note that square brackats around identifiers is a common standard in writing SQL.
+-- Databases in SQL group all their content into something called a "schema".Each database can have one or more schemas.
+-- The default schema name is [dbo].
+-- Schema names are applied to top-level object,like tables names.
+CREATE TABLE [dbo].[Customers]
 (
     -- The body of a CREATE TABLE will identify a comma-separated list of
     -- Column Declarations and Table Constraints.
@@ -81,3 +89,20 @@ CREATE TABLE OrderDetails
 )
 
     /* ==========================Practice SQL Below=========================== */
+
+    CREATE TABLE Payments
+(
+    PaymentID            int                 NOT NULL,
+    [Date]               datetime            NOT NULL,
+    PaymentAmount        money               NOT NULL,
+    PaymentType          varchar(7)          NOT NULL
+)
+
+CREATE TABLE PaymentLogDetails
+(
+    OrderNumber         int          NOT NULL,
+    PaymentID           int          NOT NULL,
+    PaymentNumber       smallint     NOT NULL,
+    BalanceOwing        money        NOT NULL,
+    DepositBatchNumber  int          NOT NULL
+)
