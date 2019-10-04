@@ -60,6 +60,7 @@ Under the options tab in SQL Server managerment, go to text editor, then activat
 
  SQL
  = Is Equal To
+ >LIKE "Pattern".
  > use the greater than; less than symbols.
 
  Logical Operators
