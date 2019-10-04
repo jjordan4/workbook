@@ -65,9 +65,37 @@ CREATE TABLE [dbo].[Customers]
     LastName        varchar(60)         NOT NULL,
     [Address]       varchar(40)         NOT NULL,
     City            varchar(35)         NOT NULL,
-    Province        char(2)             NOT NULL,
-    PostalCode      char(6)             NOT NULL,
-    PhoneNumber     char(13)                NULL  -- NULL means the data is optional
+    Province        char(2)
+    -- A DEFAULT contraint  will supply a default value for a column
+    -- whenevr no value is supplied when adding a row of data
+      CONSTRAINT DF_Customers_Province
+       DEFAULT ('AB')
+    -- A CHECK constraint ensures that only the specified value(s)
+    -- will be accepted when adding a row of data
+      CONSTRAINT CK_Customers_Province
+        CHECK (Province = 'AB' OR
+               Province = 'BC' OR
+               Province = 'SK' OR
+               Province = 'MB' OR
+               Province = 'QC' OR
+               Province = 'ON' OR
+               Province = 'NT' OR
+               Province = 'NS' OR
+               Province = 'NB' OR
+               Province = 'NL' OR
+               Province = 'YK' OR
+               Province = 'NU' OR
+               Province = 'PE' )
+
+                                        NOT NULL,
+    PostalCode      char(6)
+       CONSTRAINT CK_Customers_PostalCode
+        CHECK (PostalCode LIKE '[A-Z][0-9][A-Z][0-9][A-Z][0-9]')
+                                        NOT NULL,
+    PhoneNumber     char(13) 
+    CONSTRAINT CK_Customers_PhoneNumber
+        CHECK (PhoneNumber LIKE '([0-9][0-9][0-9])[0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]')
+                                            NULL  -- NULL means the data is optional
 )
 
 CREATE TABLE Orders
@@ -126,9 +154,9 @@ CREATE TABLE OrderDetails
                                         NOT NULL,
     SellingPrice    money
     CONSTRAINT CK_OrderDetails_SellingPrice
-       CHECK (SellingPrice > 0)
+       CHECK (SellingPrice >= 0)
                                         NOT NULL,
-    Amount     AS Quantity + SellingPrice
+    Amount     AS Quantity * SellingPrice ,
     -- The following is a Table Constraint
     -- A composite primary key MUST be done as a Table Constraint
     -- because it involves two or more columns
@@ -136,14 +164,39 @@ CREATE TABLE OrderDetails
         PRIMARY KEY (OrderNumber, ItemNumber) -- Specify all the columns in the PK
 )
 
+-- Let's insert a few rows of data for the Tables(DML Statements)
+PRINT 'Inserting customer data'
+INSERT INTO Customers(FirstName,Lastname, [Address], City, PostalCode)
+  VALUES ('Clark', 'Kent', '344 Clinton Street', 'Metropolis', 'S0S0N0')
+INSERT INTO Customers(FirstName,Lastname, [Address], City, PostalCode)
+  VALUES ('Jimmy','Olsen','242 River Close','Bakerline','B4K3R1')
+  PRINT ' -- end of customer data--'
+  PRINT ''
+
+-- Let's write an SQL statement to view the data in the database
+-- Select the customer information
+SELECT CustomerNumber,FirstName, LastName, [Address] + '' + City + ',' + Province AS 'Customer Address', PhoneNumber
+FROM   Customers
     /* ==========================Practice SQL Below=========================== */
 
     CREATE TABLE Payments
 (
     PaymentID            int                 NOT NULL,
     [Date]               datetime            NOT NULL,
-    PaymentAmount        money               NOT NULL,
-    PaymentType          varchar(7)          NOT NULL
+    PaymentAmount        money               
+        CONSTRAINT CK_Payments_PaymentAmount
+           CHECK (PaymentAmount > 0)
+                                             NOT NULL,
+    PaymentType          varchar(7) 
+            CONSTRAINT DF_Payments_PaymentType
+              DEFAULT ('Cash')
+
+            CONSTRAINT CK_Payments_PaymentType 
+              CHECK (PaymentType  = 'Cash' OR
+                     PaymentType  = 'Cheque' OR
+                     PaymentType  = 'Credit' 
+                     )
+                                             NOT NULL
 )
 
 CREATE TABLE PaymentLogDetails
@@ -151,6 +204,9 @@ CREATE TABLE PaymentLogDetails
     OrderNumber         int          NOT NULL,
     PaymentID           int          NOT NULL,
     PaymentNumber       smallint     NOT NULL,
-    BalanceOwing        money        NOT NULL,
+    BalanceOwing        money 
+     CONSTRAINT CK_PaymentLogDetails_BalanceOwing  
+           CHECK (BalanceOwing   >= 0)
+                                     NOT NULL,
     DepositBatchNumber  int          NOT NULL
 )
