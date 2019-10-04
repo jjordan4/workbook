@@ -57,3 +57,7 @@ Under the options tab in SQL Server managerment, go to text editor, then activat
 
 ## DROP TABLES
  Drop your tables in the reverse order you create your tables for your database.
+
+ SQL
+ = Is Equal To
+ > use the greater than; less than symbols.
