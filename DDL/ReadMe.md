@@ -67,3 +67,4 @@ Under the options tab in SQL Server managerment, go to text editor, then activat
  > OR,
  > AND,
  > NOT.
+ 
