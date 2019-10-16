@@ -150,6 +150,8 @@ FROM    Course
 WHERE   CourseID LIKE '____1%' -- four underscores, 1, %
 --                     DMIT158
 
+-- check nait.ca/sl
+
 --11. Select the CourseID's and CourseNames where the CourseName contains the word 'programming'
 
 --12. Select all the ClubNames who start with N or C.
