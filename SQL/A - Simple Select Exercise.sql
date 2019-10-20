@@ -110,7 +110,7 @@ WHERE   Mark BETWEEN 70 AND 80 -- BETWEEN is inclusive
 SELECT  StudentID
         --, WithdrawYN
 FROM    Registration
-WHERE   WithdrawYN IS NULL -- we use IS NULL instead of = NULL, because = NULL won't work.
+WHERE   WithdrawYN  is NULL -- we use IS NULL instead of = NULL, because = NULL won't work.
 
 -- 7.b. Select the student ids of students who have withdrawn from a course
 SELECT  StudentID
@@ -153,9 +153,21 @@ WHERE   CourseID LIKE '____1%' -- four underscores, 1, %
 -- check nait.ca/sl
 
 --11. Select the CourseID's and CourseNames where the CourseName contains the word 'programming'
+SELECT CourseID, CourseName
+FROM   Course
+WHERE  CourseName LIKE 'programming%'
 
 --12. Select all the ClubNames who start with N or C.
+SELECT ClubName
+FROM   Club
+WHERE  ClubName LIKE 'N%' OR ClubName LIKE 'C%'
 
 --13. Select Student Names, Street Address and City where the lastName is only 3 letters long.
+SELECT FirstName, LastName, StreetAddress, City
+FROM   Student
+WHERE  LastName LIKE '___'
 
 --14. Select all the StudentID's where the PaymentAmount < 500 OR the PaymentTypeID is 5
+SELECT StudentID
+FROM   Payment
+WHERE  Amount < 500 OR PaymentTypeID = 5
