@@ -99,7 +99,6 @@ SELECT C.CourseHours, AVG (CourseCost) AS 'Average Cost'
 FROM Course AS C
 GROUP BY C.CourseHours
 
-
 --11. Which teachers are getting the best results from the courses they teach? Display the staff ID and the average course mark, sorted by the course mark from highest to lowest.
 
 --12. How many male and female students do we have?
