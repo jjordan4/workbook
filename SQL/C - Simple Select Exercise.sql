@@ -15,7 +15,7 @@ ORDER BY CourseId
 SELECT  CourseId,                   -- This column is a non-aggregate
         AVG(Mark) AS 'Average Mark' -- This column performs Aggregate (produce 1 value)
 FROM    Registration
-GROUP BY CourseId                   -- Group by the non-aggregate columns
+GROUP BY CourseId                   -- Group by the non-aggregate columns(Always)
 -- When performing an Aggregate function in the SELECT clause, if you have any other 
 -- non-aggregate columns in the SELECT clause, then these must be listed in the GROUP BY clause.
 
@@ -30,7 +30,7 @@ SELECT  PaymentTypeID,                              -- Non-aggregate column (btw
         COUNT(PaymentTypeID) AS 'Count of Pay Type' -- Aggregate column
 FROM    Payment
 GROUP BY PaymentTypeID
-ORDER BY COUNT(PaymentTypeID) ASC
+ORDER BY COUNT(PaymentTypeID) DESC
 /* A note on ORDER BY
    - The ORDER BY clause will, by default, do the sorting in ascending order.
      You can also sort by more than one column (more on that later).
@@ -40,13 +40,17 @@ ORDER BY COUNT(PaymentTypeID) ASC
 
 -- 3. Select the average Mark for each studentID. Display the StudentId and their average mark
 -- TODO: Student Answer Here....
+SELECT StudentID, AVG (Mark) AS 'Average Mark'
+FROM Registration
+GROUP BY StudentID
+ORDER BY AVG (Mark) DESC
 
 -- 4. Select the same data as question 3 but only show the studentID's and averages that are > 80
 SELECT StudentID,
        AVG(Mark) AS 'Avg Mark'
 FROM   Registration
 GROUP BY StudentID
--- The HAVING clause is where we do filtering of Aggregate information
+-- The HAVING clause is where we do filtering of *Aggregate* information
 HAVING AVG(Mark) > 80
 
 -- 5. How many students are from each city? Display the City and the count.
@@ -73,6 +77,9 @@ GROUP BY PaymentTypeID
 
 -- 8. How many students are there in each club? Show the clubID and the count
 -- TODO: Student Answer Here....
+SELECT COUNT (StudentID) AS 'Number of Students', ClubId
+FROM Activity
+GROUP BY ClubId
 
 -- Check your answer by manually grouping students by their club membership and counting them
 SELECT  ClubId, StudentID
@@ -80,7 +87,10 @@ FROM    Activity
 
 -- 9. Which clubs have 3 or more students in them?
 -- TODO: Student Answer Here....
-
+SELECT COUNT (StudentID) AS 'Number of Students', ClubId
+FROM Activity
+GROUP BY ClubId
+HAVING COUNT (StudentID) >= 3
 
 --10. Grouping the courses by the number of hours in each course, what is the average cost of those courses? Display the course hours and the average cost.
 
