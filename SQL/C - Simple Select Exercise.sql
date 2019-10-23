@@ -88,18 +88,22 @@ FROM    Activity
 -- 9. Which clubs have 3 or more students in them?
 -- TODO: Student Answer Here....
 
-SELECT COUNT (StudentID) AS 'Number of Students', ClubId
+SELECT COUNT (StudentID) AS 'Number of Students', ClubId AS 'Club ID'
 FROM Activity
 GROUP BY ClubId
 HAVING COUNT (StudentID) >= 3
 
 --10. Grouping the courses by the number of hours in each course, what is the average cost of those courses? Display the course hours and the average cost.
 
-SELECT C.CourseHours, AVG (CourseCost) AS 'Average Cost'
+SELECT C.CourseHours AS 'Course Hours', AVG (CourseCost) AS 'Average Cost'
 FROM Course AS C
 GROUP BY C.CourseHours
 
 --11. Which teachers are getting the best results from the courses they teach? Display the staff ID and the average course mark, sorted by the course mark from highest to lowest.
+SELECT R.StaffID AS 'Staff ID', AVG (Mark) AS 'Average Marks'
+FROM Registration AS R
+GROUP BY R.StaffID
+ORDER BY AVG (Mark) DESC
 
 --12. How many male and female students do we have?
 
@@ -107,6 +111,6 @@ GROUP BY C.CourseHours
 
 --14. How many students participate in school clubs? Display the club id and the number of students. (Hint: You should be using the Activity table for this question.)
 
-SELECT COUNT (StudentID) AS 'Number of Students', ClubId
+SELECT COUNT (StudentID) AS 'Number of Students', ClubId AS 'Club ID'
 FROM Activity
 GROUP BY ClubId
