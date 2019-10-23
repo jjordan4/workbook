@@ -36,8 +36,9 @@ GO
 	-- DATENAME - See https://msdn.microsoft.com/en-CA/library/ms174395.aspx for DateParts
 	SELECT DATENAME(MONTH, GETDATE()) AS 'Database Server- Current Month'
 	-- DATEPART - Similar to above
-	SELECT DATEPART(WEEKDAY, GETDATE()) AS 'Day of the week',
-	       DATENAME(WEEKDAY, GETDATE()) AS 'Day of the week'
+	SELECT DATEPART(WEEKDAY, GETDATE()) AS 'Day of the week', -- (the number of the day)
+	       DATENAME(WEEKDAY, GETDATE()) AS 'Day of the week'--(name)
+
 	-- DAY
 	-- MONTH -- Birthdays this month - Student.Birthdate
     SELECT FirstName, MONTH(Birthdate) AS 'Birth Month' FROM Student

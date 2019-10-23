@@ -22,7 +22,7 @@ FROM    Student AS S
 
 --2.	Select the Staff full names and the Course ID's they teach.
 --      Order the results by the staff name then by the course Id
-SELECT  DISTINCT -- The DISTINCT keyword will remove duplate rows from the results
+SELECT DISTINCT -- The DISTINCT keyword will remove duplate rows from the results
         FirstName + ' ' + LastName AS 'Staff Full Name',
         CourseId
 FROM    Staff S
@@ -35,6 +35,8 @@ ORDER BY 'Staff Full Name', CourseId
 SELECT  ClubId, FirstName + ' ' + LastName AS 'Student Full Name'
 FROM    Activity A
     INNER JOIN Student S ON A.StudentID = S.StudentID
+-- Optionally, it could be helpful to sort the results (But only do if asked to)
+ORDER BY A.ClubId
 
 --4.	Select the Student full name, courseID's and marks for studentID 199899200.
 SELECT  S.FirstName + ' ' + S.LastName AS 'Student Name',
@@ -70,7 +72,7 @@ FROM    Staff S
 WHERE   CourseName = 'Networking 1'
 
 
---8.	What is the course list for student ID 199912010 in semester 2001S. Select the Students Full Name and the CourseNames
+--8.	What is the course list for student ID 199912010 in semester 2001S(Where clause). Select the Students Full Name and the CourseNames
 -- TODO: Student Answer Here...
 SELECT  FirstName + ' ' + LastName AS 'Student',
         CourseName
@@ -84,4 +86,13 @@ WHERE   S.StudentID = 199912010
 
 --9. What are the Student Names, courseID's that have Marks > 80?
 -- TODO: Student Answer Here...
-
+SELECT S.FirstName + ' '+ S.LastName AS 'Student', CourseID
+FROM Student AS S
+   INNER JOIN Registration AS R ON S.StudentID = R.StudentID
+WHERE R.Mark > 80
+--10.Modify the sript from the previous question to show the course name instead of the ID.
+ SELECT S.FirstName + ' ' + S.LastName AS 'Student', CourseName
+ FROM Student AS S
+   INNER JOIN Registration AS R ON S.StudentID = R.StudentID
+   INNER JOIN Course AS C ON R.CourseId = C.CourseId
+ WHERE R.Mark > 80
