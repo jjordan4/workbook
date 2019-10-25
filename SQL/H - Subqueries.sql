@@ -23,6 +23,31 @@ WHERE  PaymentTypeDescription = 'cash'
 
 --2. Select The Student ID's of all the students that are in the 'Association of Computing Machinery' club
 -- TODO: Student Answer Here
+SELECT StudentID,ClubName
+FROM Activity A
+INNER JOIN Club C ON C.ClubId = A.ClubId
+WHERE ClubName = 'Association of Computing Machinery'
+
+SELECT StudentID
+FROM Activity A
+WHERE ClubId =
+(
+SELECT ClubId
+FROM Club
+WHERE ClubName ='Association of Computing Machinery'
+)
+--2.b
+SELECT FirstName + ' '+ LastName
+FROM Student
+WHERE StudentID IN
+(SELECT StudentID
+FROM Activity
+WHERE ClubId =
+(SELECT ClubId FROM Club WHERE ClubName ='Association of Computing Machinery'))
+-- This is like saying
+SELECT FirstName + ' '+ LastName
+FROM Student
+WHERE StudentID IN (199912010,200322620,200495500)
 
 --3. Select All the staff full names for staff that have taught a course.
 SELECT FirstName + ' ' + LastName AS 'Staff'

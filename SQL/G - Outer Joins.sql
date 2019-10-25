@@ -41,16 +41,32 @@ FROM    Student S
 GROUP BY FirstName, LastName
 --5. How many students are in each club? Display club name and count.
 -- TODO: Student Answer Here...
-
+SELECT ClubName,COUNT (StudentID) AS 'Number of students'
+FROM Club C
+  LEFT OUTER JOIN Activity A ON A.ClubId = C.ClubId
+  GROUP BY C.ClubName
 --6. How many times has each course been offered? Display the course ID and course name along with the number of times it has been offered.
 -- TODO: Student Answer Here...
-
+SELECT CO.CourseName,CO.CourseId,COUNT (Semester) AS 'Number of times offered '
+FROM Course CO
+LEFT OUTER JOIN Registration R ON R.CourseId = CO.CourseId
+GROUP BY CO.CourseName,CO.CourseId
 --7. How many courses have each of the staff taught? Display the full name and the count.
 -- TODO: Student Answer Here...
-
+SELECT S.FirstName + ' '+ S.LastName AS 'Staff Name', COUNT (CourseId) AS 'Number of courses taught'
+FROM Staff S
+LEFT OUTER JOIN Registration R ON R.StaffID = S.StaffID
+GROUP BY S.FirstName + ' '+ S.LastName
 --8. How many second-year courses have the staff taught? Include all the staff and their job position.
 --   A second-year course is one where the number portion of the course id starts with a '2'.
 -- TODO: Student Answer Here...
+SELECT S.FirstName + ' '+ S.LastName AS 'Staff Name', P.PositionDescription, COUNT (CourseId) AS 'Course Count'
+FROM Position P
+LEFT OUTER JOIN Staff S On S.PositionID = P.PositionID
+LEFT OUTER JOIN Registration R ON R.StaffID = S.StaffID
+WHERE R.CourseId LIKE '____2%'
+OR   R.CourseId IS NULL
+GROUP BY PositionDescription, FirstName, LastName
 
 --9. What is the average payment amount made by each student? Include all the students,
 --   and display the students' full names.
