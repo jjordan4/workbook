@@ -65,3 +65,14 @@ GO
 --    UNION that with a list of the course IDs and the MaxStudents of the course.
 --    The columns should be 'Course', 'Count', and 'Type', with the type for the
 --    first list being 'Actual-' + Semester and the type for the second list being 'Planned'.
+
+SELECT R.CourseId AS 'Course' , COUNT (StudentID) AS 'Number of students'
+FROM Registration R
+GROUP BY R.CourseId
+
+UNION
+
+SELECT C.CourseId AS 'Course', C.MaxStudents AS 'Type'
+FROM Course C
+
+GO
