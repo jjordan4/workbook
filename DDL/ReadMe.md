@@ -68,3 +68,8 @@ Under the options tab in SQL Server managerment, go to text editor, then activat
  > AND,
  > NOT.
  
+
+ ## Stored Procedures
+ Creating stored procedures are a method that are attached to the database.
+
+The 3 place where you would mainly use stored procedures are government,banking systems and military 
