@@ -4,6 +4,18 @@
 USE [A01-School]
 GO
 
+/* ********* SPROC Template ************
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROCEDURE' AND ROUTINE_NAME = 'SprocName')
+    DROP PROCEDURE SprocName
+GO
+CREATE PROCEDURE SprocName
+    -- Parameters here
+AS
+    -- Body of procedure here
+RETURN
+GO
+************************************** */
+
 -- Take the following queries and turn them into stored procedures.
 
 -- 1.   Selects the studentID's, CourseID and mark where the Mark is between 70 and 80
