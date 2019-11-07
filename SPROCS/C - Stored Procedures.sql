@@ -4,6 +4,18 @@
 USE [A01-School]
 GO
 
+/* ********* SPROC Template ************
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROCEDURE' AND ROUTINE_NAME = 'SprocName')
+    DROP PROCEDURE SprocName
+GO
+CREATE PROCEDURE SprocName
+    -- Parameters here
+AS
+    -- Body of procedure here
+RETURN
+GO
+************************************** */
+
 -- Take the following queries and turn them into stored procedures.
 
 -- 1.   Selects the studentID's, CourseID and mark where the Mark is between 70 and 80
@@ -14,6 +26,31 @@ WHERE   Mark BETWEEN 70 AND 80 -- BETWEEN is inclusive
 --      one for the upper value and one for the lower value.
 --      Call the stored procedure ListStudentMarksByRange
 
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROCEDURE' AND ROUTINE_NAME = 'ListStudentMarksByRange')
+    DROP PROCEDURE ListStudentMarksByRange
+GO
+CREATE PROCEDURE ListStudentMarksByRange
+    -- Parameters here
+    @80 decimal,
+    @70 decimal
+AS
+    -- Body of procedure here
+IF @80 IS NULL OR @70 IS NULL
+   RAISERROR('Marks between 70 and 80 are required',16,1)
+    ELSE IF NOT EXISTS (SELECT StudentID,CourseId, Mark FROM Registration WHERE Mark BETWEEN 70 AND 80)
+    RAISERROR('That student mark below average', 16, 1)
+    ELSE
+SELECT  StudentID, CourseId, Mark
+FROM    Registration
+WHERE   Mark BETWEEN 70  AND 80 
+
+RETURN
+GO
+
+EXEC ListStudentMarksByRange 
+EXEC ListStudentMarksByRange '30','50'
+EXEC ListStudentMarksByRange NULL,'50'
+EXEC ListStudentMarksByRange '30',NULL
 
 /* ----------------------------------------------------- */
 
@@ -26,6 +63,28 @@ FROM    Staff S
         ON S.StaffID = R.StaffID
 ORDER BY 'Staff Full Name', CourseId
 --      Place this in a stored procedure called CourseInstructors.
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROCEDURE' AND ROUTINE_NAME = 'CourseInstructors')
+    DROP PROCEDURE CourseInstructors
+GO
+CREATE PROCEDURE CourseInstructors
+    -- Parameters here
+    @StaffFullName varchar (60),
+    @CourseId      char (7)
+AS
+    -- Body of procedure here
+    SELECT  DISTINCT -- The DISTINCT keyword will remove duplate rows from the results
+        FirstName + ' ' + LastName AS 'Staff Full Name',
+        CourseId
+FROM    Staff S
+    INNER JOIN Registration R
+        ON S.StaffID = R.StaffID
+WHERE 'Staff Full Name' = @StaffFullName AND CourseId = @CourseId
+ORDER BY 'Staff Full Name', CourseId
+RETURN
+GO
+
+EXEC CourseInstructors 'Jerry Kan','DMIT170'
 
 
 /* ----------------------------------------------------- */

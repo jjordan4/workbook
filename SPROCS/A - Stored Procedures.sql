@@ -44,7 +44,7 @@ GO
 CREATE PROCEDURE HonorCourses
     -- Parameters here
 AS
-    -- Body of procedure here
+    -- Body of procedure here(Queries)
     SELECT C.CourseName
     FROM   Course C
         INNER JOIN Registration R ON C.CourseId = R.CourseId
@@ -170,9 +170,70 @@ VALUES ('DMIT987', 'Advanced Logic', 90, 420.00, 12)
 
 --6. Create a stored procedure called "Provinces" to list all the students provinces.
 
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROCEDURE' AND ROUTINE_NAME = 'Provinces')
+    DROP PROCEDURE Provinces
+GO
+CREATE PROCEDURE Provinces
+    -- Parameters here
+AS
+    -- Body of procedure here
+    SELECT S.FirstName + ' ' + S.LastName AS 'Student Name', S.Province 
+    FROM Student S
+
+RETURN
+GO
+EXEC Provinces
+
 --7. OK, question 6 was ridiculously simple and serves no purpose. Lets remove that stored procedure from the database.
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROCEDURE' AND ROUTINE_NAME = 'Provinces')
+    DROP PROCEDURE Provinces
+GO
 
 --8. Create a stored procedure called StudentPaymentTypes that lists all the student names and their payment types. Ensure all the student names are listed, including those who have not yet made a payment.
 
+
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROCEDURE' AND ROUTINE_NAME = 'StudentPaymentTypes')
+    DROP PROCEDURE StudentPaymentTypes
+GO
+CREATE PROCEDURE StudentPaymentTypes
+    -- Parameters here
+AS
+    -- Body of procedure here
+        SELECT S.FirstName + ' ' + S.LastName AS 'Student Name', PT.PaymentTypeDescription
+    FROM Student S
+     LEFT OUTER JOIN Payment P ON P.StudentID = S.StudentID
+     LEFT OUTER JOIN PaymentType PT ON PT.PaymentTypeID = P.PaymentTypeID
+RETURN
+GO
+
+EXEC StudentPaymentTypes
+
 --9. Modify the procedure from question 8 to return only the student names that have made payments.
 
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROCEDURE' AND ROUTINE_NAME = 'StudentPaymentTypes')
+    DROP PROCEDURE StudentPaymentTypes
+GO
+CREATE PROCEDURE StudentPaymentTypes
+    -- Parameters here
+    @Amount  decimal(6,2)
+AS
+    -- Body of procedure here
+        SELECT S.FirstName + ' ' + S.LastName AS 'Student Name', PT.PaymentTypeDescription
+    FROM Student S
+     LEFT OUTER JOIN Payment P ON P.StudentID = S.StudentID
+     LEFT OUTER JOIN PaymentType PT ON PT.PaymentTypeID = P.PaymentTypeID
+     WHERE P.Amount <> @Amount
+RETURN
+GO
+
+
+EXEC StudentPaymentTypes '0.0'
+
+-- or ALTER PROCEDURE StudentPaymentTypes
+--SELECT S.FirstName + ' ' + S.LastName AS 'Student Name', PT.PaymentTypeDescription
+    --FROM Student S
+     --INNER JOIN Payment P ON P.StudentID = S.StudentID
+     --INNER JOIN PaymentType PT ON PT.PaymentTypeID = P.PaymentTypeID
+     --RETURN
+     --GO
