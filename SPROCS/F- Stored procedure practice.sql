@@ -64,7 +64,11 @@ AS
 RETURN
 GO
 
-EXEC
+-- to test the stored procedure
+SELECT * FROM Club AS C LEFT OUTER JOIN Activity AS A ON C.ClubId = A.ClubId
+EXEC DissolveClub 'CIPS' -- Should succeed
+EXEC DissolveClub 'ACM' -- Should succeed
+
 
 --SELECT * FROM Activity
 --SELECT * FROM Club
