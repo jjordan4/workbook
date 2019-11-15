@@ -67,7 +67,8 @@ GO
 -- to test the stored procedure
 SELECT * FROM Club AS C LEFT OUTER JOIN Activity AS A ON C.ClubId = A.ClubId
 EXEC DissolveClub 'CIPS' -- Should succeed
-EXEC DissolveClub 'ACM' -- Should succeed
+EXEC DissolveClub 'ACM' -- Should succeed, should fail if ran a second time.
+EXEC DissolveClub NULL -- Should Fail.
 
 
 --SELECT * FROM Activity
